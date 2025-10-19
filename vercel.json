@@ -1,7 +1,1 @@
-{
-  "functions": {
-    "api/get-barcode-url.ts": {
-      "runtime": "nodejs18.x"
-    }
-  }
-}
+full contents of vercel.json
