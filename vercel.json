@@ -1,1 +1,3 @@
-full contents of vercel.json
+{
+  "installCommand": "npm install"
+}
