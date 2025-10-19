@@ -1,0 +1,5 @@
+{
+  "name": "Barcode Sheet Generator",
+  "description": "An application to generate a printable A4 sheet filled with a user-provided barcode, allowing customization of horizontal and vertical counts at 300 DPI.",
+  "requestFramePermissions": []
+}
