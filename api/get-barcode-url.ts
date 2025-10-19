@@ -1,10 +1,11 @@
 // File: api/get-barcode-url.ts
 // This is the Vercel Serverless Function that runs on the server.
 
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
 
 // The handler function that Vercel will run
-export default async function handler(request, response) {
+export default async function handler(request: VercelRequest, response: VercelResponse) {
   // Allow requests from any origin (CORS). Important for local testing and production.
   response.setHeader('Access-Control-Allow-Origin', '*');
   response.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -18,8 +19,8 @@ export default async function handler(request, response) {
   // Get the barcode number from the URL query, e.g., ?number=1
   const barcodeNumber = request.query.number;
 
-  if (!barcodeNumber) {
-    return response.status(400).json({ error: 'Barcode number is required.' });
+  if (!barcodeNumber || typeof barcodeNumber !== 'string') {
+    return response.status(400).json({ error: 'Barcode number is required and must be a string.' });
   }
 
   try {
@@ -50,8 +51,9 @@ export default async function handler(request, response) {
     // If successful, return the found image URL in JSON format
     return response.status(200).json({ imageUrl: data.image_url });
 
-  } catch (error) {
+  } catch (error: unknown) {
     // If any error occurs, return a descriptive error message
-    return response.status(404).json({ error: error.message });
+    const message = error instanceof Error ? error.message : String(error);
+    return response.status(404).json({ error: message });
   }
 }
